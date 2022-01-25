@@ -4,8 +4,8 @@ on:
     branches: ['main']
 
 jobs:
-  Setup:
-    name: Setup
+  setup-matrix:
+    name: setup-matrix
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -21,21 +21,21 @@ jobs:
         #     # echo $d
         #     MATRIX_PARAMS_COMBINATIONS+="{\"name\": \"${d}\" },"
         # done
+        # MATRIX_PARAMS_COMBINATIONS=${MATRIX_PARAMS_COMBINATIONS%?} # removing last comma character
         MATRIX_PARAMS_COMBINATIONS='
             {"name": "foo-1", "bar": "bar-1"},
             {"name": "foo-1", "bar": "bar-2"},
             {"name": "foo-2", "bar": "bar-1"},
-        '
-        MATRIX_PARAMS_COMBINATIONS=${MATRIX_PARAMS_COMBINATIONS%?} # removing last comma character
+        '        
         echo ::set-output name=matrix-combinations::{\"include\":[$MATRIX_PARAMS_COMBINATIONS]}        
     outputs:
       matrix-combinations: ${{ steps.setup-matrix-combinations.outputs.matrix-combinations }}
     
   matrix-job:
     runs-on: ubuntu-latest
-    needs: Setup
+    needs: setup-matrix
     strategy:
-      matrix: ${{ fromJson(needs.Setup.outputs.matrix-combinations) }}
+      matrix: ${{ fromJson(needs.setup-matrix.outputs.matrix-combinations) }}
     steps:
       - run: |
           echo foo=${{ matrix.name }}
