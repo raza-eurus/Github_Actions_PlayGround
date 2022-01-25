@@ -10,11 +10,12 @@ jobs:
       - name: Setup matrix combinations
         id: setup-matrix-combinations
         run: |
-          MATRIX_PARAMS_COMBINATIONS='
-              {"foo": "foo-1", "bar": "bar-1"},
-              {"foo": "foo-1", "bar": "bar-2"},
-              {"foo": "foo-2", "bar": "bar-1"},
+          MATRIX_PARAMS_COMBINATIONS='              
           '
+          cd helm_charts
+          for d in * ; do
+              MATRIX_PARAMS_COMBINATIONS+="{\"name\": \"${d}\" },"
+          done
           echo ::set-output name=matrix-combinations::{\"include\":[$MATRIX_PARAMS_COMBINATIONS]}
     outputs:
       matrix-combinations: ${{ steps.setup-matrix-combinations.outputs.matrix-combinations }}
@@ -25,6 +26,5 @@ jobs:
       matrix: ${{ fromJson(needs.setup-matrix.outputs.matrix-combinations) }}
     steps:
       - run: |
-          echo foo=${{ matrix.foo }}
-          echo bar=${{ matrix.bar }}
+          echo foo=${{ matrix.name }}
   
