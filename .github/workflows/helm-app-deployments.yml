@@ -20,7 +20,7 @@ jobs:
         chart_list=$(ls ./helm_charts | jq -R -s -c 'split("\n")[:-1]')
         echo $chart_list
         # echo '::set-output name=value::$chart_list'
-        echo "::set-output name=matrix::{\"include\":$chart_list}"
+        echo "::set-output name=value::{\"include\":$chart_list}"
   
   Install:
     needs: [ Setup ]
