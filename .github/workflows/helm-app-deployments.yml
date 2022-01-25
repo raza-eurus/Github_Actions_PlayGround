@@ -15,7 +15,7 @@ jobs:
     - name: helm_chart_list
       run: |
         # ls ./helm_charts
-        chart_list=$(ls ./helm_charts | jq -R -s -c 'split("\n")[:-1]')
+        chart_list=$(ls ./helm_charts | jq -R -s -c 'split("\n")[:-1]' | jq '.[] | {name: .}' | jq -s .)
         echo $chart_list
         # echo "::set-output name=matrix::{\"include\":[$chart_list]}
         # echo '::set-output name=matrix::$chart_list'
@@ -43,5 +43,5 @@ jobs:
         # package: ${{fromJson(needs.Setup.outputs.matrix)}}
     steps:
     - run: |
-        echo "${{ matrix }}"
+        echo "${{ matrix.name }}"
 
