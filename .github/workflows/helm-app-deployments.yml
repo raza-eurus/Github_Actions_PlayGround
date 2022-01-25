@@ -16,6 +16,9 @@ jobs:
       run: |
         # ls ./helm_charts
         chart_list=$(ls ./helm_charts | jq -R -s -c 'split("\n")[:-1]' | jq '.[] | {name: .}' | jq -s .)
+        chart_list="${chart_list//'%'/'%25'}"
+        chart_list="${chart_list//$'\n'/'%0A'}"
+        chart_list="${chart_list//$'\r'/'%0D'}"
         # echo $chart_list
         echo "::set-output name=matrix::{\"include\":$chart_list}"
         # echo '::set-output name=matrix::$chart_list'
