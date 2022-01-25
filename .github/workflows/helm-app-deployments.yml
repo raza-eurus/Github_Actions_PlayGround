@@ -19,7 +19,7 @@ jobs:
         chart_list="${chart_list//'%'/'%25'}"
         chart_list="${chart_list//$'\n'/'%0A'}"
         chart_list="${chart_list//$'\r'/'%0D'}"
-        # echo $chart_list
+        echo $chart_list
         echo "::set-output name=matrix::{\"include\":$chart_list}"
         # echo '::set-output name=matrix::$chart_list'
         # echo "::set-output name=value::{\"include\":$chart_list}"
