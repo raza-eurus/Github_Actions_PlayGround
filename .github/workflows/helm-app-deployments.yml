@@ -1,4 +1,7 @@
 name: HelmChartList
+on:
+  push:
+    branches: ['main']
 
 jobs:
   Setup:
