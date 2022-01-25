@@ -29,7 +29,14 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        package: ${{fromJson({["coding-standard", "phpstan-rules"]})}}
+        includes:
+          - foo: foo-1
+            bar: bar-1
+          - foo: foo-1
+            bar: bar-2
+          - foo: foo-2
+            bar: bar-1
+        # package: ${{fromJson({["coding-standard", "phpstan-rules"]})}}
         # package: ${{fromJson(needs.Setup.outputs.matrix)}}
     steps:
     - run: |
