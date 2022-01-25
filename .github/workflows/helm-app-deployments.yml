@@ -29,7 +29,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        package: ${{fromJson(needs.Setup.outputs.matrix)}}
+        package: ${{ fromJson(["coding-standard", "phpstan-rules"]) }}
+        # package: ${{fromJson(needs.Setup.outputs.matrix)}}
     steps:
     - run: |
         echo "${{ matrix.package }}"
