@@ -15,11 +15,13 @@ jobs:
     - name: helm_chart_list
       run: |
         # ls ./helm_charts
-        chart_list=$(ls ./helm_charts | jq -R -s -c 'split("\n")[:-1]' | jq '.[] | {name: .}' | jq -s .)
-        echo $chart_list
-        echo "::set-output name=matrix::{\"include\":$chart_list}"
+        # chart_list=$(ls ./helm_charts | jq -R -s -c 'split("\n")[:-1]' | jq '.[] | {name: .}' | jq -s .)
+        # echo $chart_list
+        # echo "::set-output name=matrix::{\"include\":$chart_list}"
         # echo '::set-output name=matrix::$chart_list'
         # echo "::set-output name=value::{\"include\":$chart_list}"
+        echo "::set-output name=matrix::$(ls ./helm_charts|jq -cnR '[inputs | select(length>0)]')"
+
     outputs:
       matrix: ${{ steps.helm_chart_list.outputs.matrix }}
     
@@ -28,7 +30,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      matrix: ${{ fromJson(needs.Setup.outputs.matrix) }}
+      matrix: 
+        subdir: ${{ fromJson(needs.Setup.outputs.matrix) }}
         # includes:
         #     - "a"
         #     - "b"
