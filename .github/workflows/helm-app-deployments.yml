@@ -8,13 +8,13 @@ jobs:
     name: Setup
     runs-on: ubuntu-latest
     outputs:
-      matrix: ${{ steps.helm-chart-ist.outputs.value }}
+      matrix: ${{ steps.helm-chart-list.outputs.value }}
     steps:
     - uses: actions/checkout@v2
       with:
         ref: main
 
-    - name: helm-chart-ist
+    - name: helm-chart-list
       run: |
         chart_list=$(ls ./helm_charts | jq -R -s -c 'split("\n")[:-1]')
         echo '::set-output name=value::$chart_list'
@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        value: ${{fromJson(needs.Setup.outputs.matrix)}}
+        value: ${{needs.Setup.outputs.matrix}}
     steps:
     - run: |
         echo "${{ matrix.value }}"
