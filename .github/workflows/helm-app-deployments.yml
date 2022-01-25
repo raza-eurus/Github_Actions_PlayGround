@@ -51,25 +51,25 @@ jobs:
           echo foo=${{ matrix.foo }}
           echo bar=${{ matrix.bar }}
     
-  Install:
-    needs: Setup
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix: ${{ fromJson("{\"includes\":[\"consul\"]}") }}
-        # includes:
-        #     - "a"
-        #     - "b"
-        #     - "c"
-          # - foo: foo-1
-          #   bar: bar-1
-          # - foo: foo-1
-          #   bar: bar-2
-          # - foo: foo-2
-          #   bar: bar-1
-        # package: ${{fromJson({["coding-standard", "phpstan-rules"]})}}
-        # package: ${{fromJson(needs.Setup.outputs.matrix)}}
-    steps:
-    - run: |
-        echo "${{ matrix }}"
+  # Install:
+  #   needs: Setup
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     fail-fast: false
+  #     matrix: ${{ fromJson("{\"includes\":[\"consul\"]}") }}
+  #       # includes:
+  #       #     - "a"
+  #       #     - "b"
+  #       #     - "c"
+  #         # - foo: foo-1
+  #         #   bar: bar-1
+  #         # - foo: foo-1
+  #         #   bar: bar-2
+  #         # - foo: foo-2
+  #         #   bar: bar-1
+  #       # package: ${{fromJson({["coding-standard", "phpstan-rules"]})}}
+  #       # package: ${{fromJson(needs.Setup.outputs.matrix)}}
+  #   steps:
+  #   - run: |
+  #       echo "${{ matrix }}"
 
