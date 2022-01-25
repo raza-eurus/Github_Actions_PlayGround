@@ -14,13 +14,18 @@ jobs:
 
     - name: helm_chart_list
       run: |        
-        MATRIX_PARAMS_COMBINATIONS='            
+        # MATRIX_PARAMS_COMBINATIONS='            
+        # '
+        # cd helm_charts
+        # for d in * ; do
+        #     # echo $d
+        #     MATRIX_PARAMS_COMBINATIONS+="{\"name\": \"${d}\" },"
+        # done
+        MATRIX_PARAMS_COMBINATIONS='
+            {"name": "foo-1", "bar": "bar-1"},
+            {"name": "foo-1", "bar": "bar-2"},
+            {"name": "foo-2", "bar": "bar-1"},
         '
-        cd helm_charts
-        for d in * ; do
-            # echo $d
-            MATRIX_PARAMS_COMBINATIONS+="{\"name\": \"${d}\" },"
-        done
         MATRIX_PARAMS_COMBINATIONS=${MATRIX_PARAMS_COMBINATIONS%?} # removing last comma character
         echo ::set-output name=matrix-combinations::{\"include\":[$MATRIX_PARAMS_COMBINATIONS]}        
     outputs:
