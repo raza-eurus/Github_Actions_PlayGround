@@ -12,10 +12,11 @@ jobs:
         run: |
           MATRIX_PARAMS_COMBINATIONS='              
           '
-          cd helm_charts
+          cd ./helm_charts
           for d in * ; do
               MATRIX_PARAMS_COMBINATIONS+="{\"name\": \"${d}\" },"
           done
+          echo $MATRIX_PARAMS_COMBINATIONS
           echo ::set-output name=matrix-combinations::{\"include\":[$MATRIX_PARAMS_COMBINATIONS]}
     outputs:
       matrix-combinations: ${{ steps.setup-matrix-combinations.outputs.matrix-combinations }}
