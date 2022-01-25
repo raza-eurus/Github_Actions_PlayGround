@@ -17,7 +17,7 @@ jobs:
         # ls ./helm_charts
         chart_list=$(ls ./helm_charts | jq -R -s -c 'split("\n")[:-1]')
         echo $chart_list
-        echo "::set-output name=matrix::[\"consul\"]"
+        # echo "::set-output name=matrix::{\"include\":[$chart_list]}
         # echo '::set-output name=matrix::$chart_list'
         # echo "::set-output name=value::{\"include\":$chart_list}"
     outputs:
@@ -30,15 +30,18 @@ jobs:
       fail-fast: false
       matrix:
         includes:
-          - foo: foo-1
-            bar: bar-1
-          - foo: foo-1
-            bar: bar-2
-          - foo: foo-2
-            bar: bar-1
+            - "a"
+            - "b"
+            - "c"
+          # - foo: foo-1
+          #   bar: bar-1
+          # - foo: foo-1
+          #   bar: bar-2
+          # - foo: foo-2
+          #   bar: bar-1
         # package: ${{fromJson({["coding-standard", "phpstan-rules"]})}}
         # package: ${{fromJson(needs.Setup.outputs.matrix)}}
     steps:
     - run: |
-        echo "${{ matrix.package }}"
+        echo "${{ matrix.value }}"
 
