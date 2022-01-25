@@ -7,28 +7,29 @@ jobs:
   Setup:
     name: Setup
     runs-on: ubuntu-latest
-    outputs:
-      matrix: ${{ steps.helm-chart-list.outputs.value }}
     steps:
     - uses: actions/checkout@v2
       with:
         ref: main
 
-    - name: helm-chart-list
+    - name: helm_chart_list
       run: |
         # ls ./helm_charts
         chart_list=$(ls ./helm_charts | jq -R -s -c 'split("\n")[:-1]')
         echo $chart_list
-        echo '::set-output name=value::$chart_list'
+        echo '::set-output name=matrix::$chart_list'
         # echo "::set-output name=value::{\"include\":$chart_list}"
+    outputs:
+      matrix: ${{ steps.helm_chart_list.outputs.matrix }}
   
   Install:
-    needs: [ Setup ]
+    needs: Setup
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        value: ${{fromJson(needs.Setup.outputs.matrix)}}
+        package: ${{fromJson(needs.Setup.outputs.matrix)}}
     steps:
     - run: |
-        echo "${{ matrix.value }}"
+        echo "${{ matrix.package }}"
 
