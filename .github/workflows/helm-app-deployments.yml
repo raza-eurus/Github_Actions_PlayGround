@@ -16,6 +16,7 @@ jobs:
 
     - name: helm-chart-list
       run: |
+        ls ./helm_charts
         chart_list=$(ls ./helm_charts | jq -R -s -c 'split("\n")[:-1]')
         echo '::set-output name=value::$chart_list'
   
