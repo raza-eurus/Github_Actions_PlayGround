@@ -28,9 +28,9 @@ jobs:
     
   matrix-job:
     runs-on: ubuntu-latest
-    needs: setup-matrix
+    needs: Setup
     strategy:
-      matrix: ${{ fromJson(needs.setup-matrix.outputs.matrix-combinations) }}
+      matrix: ${{ fromJson(needs.Setup.outputs.matrix-combinations) }}
     steps:
       - run: |
           echo foo=${{ matrix.name }}
