@@ -28,11 +28,11 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      matrix:
-        includes:
-            - "a"
-            - "b"
-            - "c"
+      matrix: ${{ fromJson({includes:['consul']}) }}
+        # includes:
+        #     - "a"
+        #     - "b"
+        #     - "c"
           # - foo: foo-1
           #   bar: bar-1
           # - foo: foo-1
