@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      matrix: ${{ fromJson({"includes":['consul']}) }}
+      matrix: ${{ fromJson("{\"includes\":[\"consul\"']}") }}
         # includes:
         #     - "a"
         #     - "b"
