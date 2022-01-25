@@ -17,7 +17,7 @@ jobs:
         # ls ./helm_charts
         chart_list=$(ls ./helm_charts | jq -R -s -c 'split("\n")[:-1]' | jq '.[] | {name: .}' | jq -s .)
         echo $chart_list
-        echo "::set-output name=matrix::{\"include\":$chart_list}
+        echo "::set-output name=matrix::{\"include\":$chart_list}"
         # echo '::set-output name=matrix::$chart_list'
         # echo "::set-output name=value::{\"include\":$chart_list}"
     outputs:
