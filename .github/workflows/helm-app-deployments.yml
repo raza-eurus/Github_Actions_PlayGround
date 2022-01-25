@@ -14,8 +14,7 @@ jobs:
       - name: Helm Chart List
         id: setup-list-matrix
         run: |
-          MATRIX_PARAMS_COMBINATIONS='              
-          '
+          MATRIX_PARAMS_COMBINATIONS=''
           cd ./helm_charts
           for d in * ; do
               MATRIX_PARAMS_COMBINATIONS+="{\"name\": \"${d}\" },"
@@ -24,6 +23,7 @@ jobs:
           echo ::set-output name=matrix-combinations::{\"include\":[$MATRIX_PARAMS_COMBINATIONS]}
     outputs:
       matrix-combinations: ${{ steps.setup-list-matrix.outputs.matrix-combinations }}
+
   helm-deployment:
     runs-on: ubuntu-latest
     needs: deployment-setup
